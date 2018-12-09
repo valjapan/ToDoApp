@@ -37,7 +37,6 @@
             android:text="Sample Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-
     </LinearLayout>
 
 

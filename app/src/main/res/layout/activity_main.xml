@@ -86,6 +86,7 @@
                 android:layout_weight="1"
                 android:onClick="addMailButton"
                 android:text="アカウントを登録する" />
+
         </LinearLayout>
 
     </LinearLayout>

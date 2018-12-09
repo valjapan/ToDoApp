@@ -26,7 +26,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private static final int RC_SIGN_IN = 9001;
-    private static final int REQUEST_CODE_EMAIL_SIGN_IN = 101;
     private FirebaseAuth mAuth;
     private GoogleApiClient mGoogleApiClient;
 

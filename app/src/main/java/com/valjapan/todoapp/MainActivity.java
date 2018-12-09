@@ -19,9 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     EditText emailFormEditText, passwordFormEditText;
-    static final String KEY_EMAIL = "key_email";
-    static final String KEY_PASSWORD = "key_password";
-    static final String KEY_HAS_ACCOUNT = "key_has_account";
     public Intent data;
     public FirebaseAuth mAuth;
     private static final String TAG = "EmailPassword";
@@ -37,32 +34,36 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public void checkEmpty() {
-        if (!TextUtils.isEmpty(emailFormEditText.getText()) &&
-                !TextUtils.isEmpty(passwordFormEditText.getText())) {
-            data = new Intent();
-            data.putExtra(KEY_EMAIL, emailFormEditText.getText().toString());
-            data.putExtra(KEY_PASSWORD, passwordFormEditText.getText().toString());
+    public boolean checkEmpty() {
+        if (TextUtils.isEmpty(emailFormEditText.getText())) {
+            Log.d("MainActivity", "何も記入されていません");
+            return false;
         }
+
+        if (TextUtils.isEmpty(passwordFormEditText.getText())) {
+            Log.d("MainActivity", "何も記入されていません");
+            return false;
+        }
+        return true;
     }
 
     public void loginMailButton(View v) {
         signIn(emailFormEditText.getText().toString(), passwordFormEditText.getText().toString());
-        data.putExtra(KEY_HAS_ACCOUNT, true);
         setResult(RESULT_OK, data);
     }
 
     public void addMailButton(View v) {
         createAccount(emailFormEditText.getText().toString(), passwordFormEditText.getText().toString());
-        data.putExtra(KEY_HAS_ACCOUNT, false);
         setResult(RESULT_OK, data);
     }
 
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
-        checkEmpty();
 
-        // [START create_user_with_email]
+        if (!checkEmpty()) {
+            return;
+        }
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
+                            Toast.makeText(MainActivity.this, "新規作成に成功しました！", Toast.LENGTH_SHORT).show();
                             changeActivity();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -84,9 +86,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
-        checkEmpty();
 
-        // [START sign_in_with_email]
+        if (!checkEmpty()) {
+            return;
+        }
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -94,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(MainActivity.this, "ログインに成功しました！", Toast.LENGTH_SHORT).show();
                             changeActivity();
                         } else {
                             // If sign in fails, display a message to the user.
