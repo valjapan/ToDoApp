@@ -14,10 +14,10 @@ import java.util.List;
 public class CustomAdapter extends ArrayAdapter<ToDoData> {
     private List<ToDoData> mCards;
 
-    public CustomAdapter(Context context, int layoutResourceId, List<ToDoData> userData) {
-        super(context, layoutResourceId, userData);
+    public CustomAdapter(Context context, int layoutResourceId, List<ToDoData> toDoData) {
+        super(context, layoutResourceId, toDoData);
 
-        this.mCards = userData;
+        this.mCards = toDoData;
     }
 
     @Override
@@ -52,13 +52,13 @@ public class CustomAdapter extends ArrayAdapter<ToDoData> {
         ToDoData toDoData = mCards.get(position);
 
         viewHolder.titleTextView.setText(toDoData.getTitle());
-        viewHolder.contentTextView.setText(toDoData.getContext());
+        viewHolder.contentTextView.setText(toDoData.getContent());
 
         return convertView;
     }
 
 
-    public ToDoData getUserDataKey(String key) {
+    public ToDoData getToDoDataKey(String key) {
         for (ToDoData toDoData : mCards) {
             if (toDoData.getFirebaseKey().equals(key)) {
                 return toDoData;

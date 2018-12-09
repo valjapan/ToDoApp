@@ -2,13 +2,13 @@ package com.valjapan.todoapp;
 
 public class ToDoData {
     public String title;
-    public String context;
+    public String content;
     public String firebaseKey;
 
-    public ToDoData(String key, String title, String context) {
+    public ToDoData(String key, String title, String content) {
         this.firebaseKey = key;
         this.title = title;
-        this.context = context;
+        this.content = content;
     }
 
     public ToDoData() {
@@ -30,12 +30,12 @@ public class ToDoData {
         this.title = title;
     }
 
-    public String getContext() {
-        return context;
+    public String getContent() {
+        return content;
     }
 
-    public void setContext(String context) {
-        this.context = context;
+    public void setContent(String context) {
+        this.content = context;
     }
 
 }

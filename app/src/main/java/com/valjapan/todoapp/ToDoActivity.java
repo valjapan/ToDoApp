@@ -21,8 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ToDoActivity extends AppCompatActivity implements ListView.OnItemLongClickListener {
     public FirebaseUser user;
@@ -41,20 +39,27 @@ public class ToDoActivity extends AppCompatActivity implements ListView.OnItemLo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do);
 
+        //ログイン情報を取得
         user = FirebaseAuth.getInstance().getCurrentUser();
+
+        //user id = Uid を取得する
         uid = user.getUid();
+
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("users").child(uid);
 
         mListView = (ListView) findViewById(R.id.list_view);
 
+        //CustomAdapterをセット
         mCustomAdapter = new CustomAdapter(getApplicationContext(), R.layout.card_view, new ArrayList<ToDoData>());
         mListView.setAdapter(mCustomAdapter);
+
+        //LongListenerを設定
         mListView.setOnItemLongClickListener(this);
 
+        //firebaseと同期するリスナー
         reference.addChildEventListener(new ChildEventListener() {
 //            データを読み込むときはイベントリスナーを登録して行う。
-//            種類は２種類ある。必要に応じて変更しよう。
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 //                アイテムのリストを取得するか、アイテムのリストへの追加がないかリッスンします。
@@ -76,7 +81,7 @@ public class ToDoActivity extends AppCompatActivity implements ListView.OnItemLo
                 ToDoData result = dataSnapshot.getValue(ToDoData.class);
                 if (result == null) return;
 
-                ToDoData item = mCustomAdapter.getUserDataKey(result.getFirebaseKey());
+                ToDoData item = mCustomAdapter.getToDoDataKey(result.getFirebaseKey());
 
                 mCustomAdapter.remove(item);
                 mCustomAdapter.notifyDataSetChanged();

@@ -15,7 +15,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     EditText emailFormEditText, passwordFormEditText;
@@ -69,12 +68,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                            // ログインに成功したら、ログインしたユーザーの情報でUIを更新します。
                             Log.d(TAG, "createUserWithEmail:success");
                             Toast.makeText(MainActivity.this, "新規作成に成功しました！", Toast.LENGTH_SHORT).show();
                             changeActivity();
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // サインインに失敗した場合は、ユーザーにメッセージを表示します。
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -96,12 +95,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                            // ログインに成功したら、ログインしたユーザーの情報でUIを更新します。
                             Log.d(TAG, "signInWithEmail:success");
                             Toast.makeText(MainActivity.this, "ログインに成功しました！", Toast.LENGTH_SHORT).show();
                             changeActivity();
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // サインインに失敗した場合は、ユーザーにメッセージを表示します。
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);

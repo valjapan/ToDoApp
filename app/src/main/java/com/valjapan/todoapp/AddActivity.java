@@ -28,13 +28,13 @@ public class AddActivity extends AppCompatActivity {
 
     public void save(View v) {
         String title = titleEditText.getText().toString();
-        String context = contentEditText.getText().toString();
+        String content = contentEditText.getText().toString();
         String key = reference.push().getKey();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
 
-//    引数のUserDataの内容をデータベースに送る。
-        ToDoData toDoData = new ToDoData(key, title, context);
+//    引数のToDoDataの内容をデータベースに送る。
+        ToDoData toDoData = new ToDoData(key, title, content);
 
         reference.child("users").child(uid).child(key).setValue(toDoData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
